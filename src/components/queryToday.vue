@@ -29,7 +29,10 @@
                 <th>作业正确率</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody v-for="item in queryData">
+                <td>{{item.account}}</td>
+                <td>{{item.Ename}}</td>
+                <td>{{item.Cname}}</td>
               </tbody>
             </table>
           </div>
@@ -44,6 +47,23 @@
 </template>
 <script>
   export default ({
-    name: 'vqueryToday'
+    name: 'vqueryToday',
+    data(){
+      return{
+        queryData:[]
+      }
+    },
+    methods:{
+      getQueryToday:function() {
+        let vm = this;
+        this.$axios.get("../static/data.json").then(function (response) {
+            console.log(response.data)
+            vm.queryData=response.data
+        })
+      }
+    },
+    created:function(){
+      this.getQueryToday()
+    }
   })
 </script>

@@ -85,7 +85,7 @@
           $('#daterange-btn').daterangepicker(
             {
               "singleDatePicker": false,
-              "timePicker": true,
+              "timePicker": false,
               "timePicker24Hour": false,
               "linkedCalendars": false,
               "autoUpdateInput": false,

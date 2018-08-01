@@ -10,16 +10,16 @@
             <!-- CHOOSEBOARD -->
             <div class="row">
               <div class="col-md-2">
-                <select class="form-control">
-                  <option value="">--请选择大区--</option>
+                <select class="form-control" v-model="selectedArea">
+                  <option disabled value="">--请选择大区--</option>
                   <option value="China">全国</option>
                   <option value="Wuhan">武汉</option>
                   <option value="Beijing">北京</option>
                 </select>
               </div>
               <div class="col-md-2">
-                <select class="form-control">
-                  <option value="">--请选择服务器--</option>
+                <select class="form-control" v-model="selectedServer">
+                  <option disabled value="">--请选择服务器--</option>
                   <option value="ServerAll">全服</option>
                   <option value="Server1">1</option>
                   <option value="Server2">2</option>
@@ -35,7 +35,7 @@
                   </button>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary">筛选</button>
+              <button type="button" class="btn btn-primary" @click="submitForm">筛选</button>
             </div>
             <br>
             <!-- END CHOOSEBOARD -->
@@ -85,8 +85,17 @@
 <script>
   export default ({
     name: 'vserverData',
+    data(){
+      return{
+        selectedArea:'',
+        selectedServer:'',
+        startTime:'',
+        endTime:''
+      }
+    },
     methods: {
       initDate: function () {
+        let vm=this
         var locale = {
           "format": 'YYYY-MM-DD',
           "separator": " -222 ",
@@ -101,13 +110,13 @@
           "firstDay": 1
         };
         //初始化显示当前时间
-        this.$nextTick(function () {
+        vm.$nextTick(function () {
           $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
           //日期控件初始化
           $('#daterange-btn').daterangepicker(
             {
               "singleDatePicker": false,
-              "timePicker": true,
+              "timePicker": false,
               "timePicker24Hour": false,
               "linkedCalendars": false,
               "autoUpdateInput": false,
@@ -124,10 +133,22 @@
               endDate: moment()
             },
             function (start, end) {
-              $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+              this.start=start;
+              this.end=end ;
+
+              $('#daterange-btn span').html( this.start.format('YYYY-MM-DD')+ ' - ' + this.end.format('YYYY-MM-DD'));
+
+              //moment对象转换成时间戳发给vue
+              vm.startTime=this.start.format('X');
+              vm.endTime=this.end.format('X');
             }
           );
         })
+      },
+      submitForm:function () {
+        let vm = this;
+          console.log(vm.selectedArea,vm.selectedServer)
+          console.log(vm.startTime,vm.endTime)
       }
     },
     created: function () {
