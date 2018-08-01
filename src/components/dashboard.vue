@@ -89,13 +89,14 @@
           lineSmooth: false,
         };
 
-        this.$nextTick(function () {
-          new Chartist.Line('#headline-chart', data, options);
-        })
+        new Chartist.Line('#headline-chart', data, options);
       }
     },
-    created: function () {
+    mounted: function () {
       this.initChart()
+    },
+    created: function () {
+
     }
   })
 </script>

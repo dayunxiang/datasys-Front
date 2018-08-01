@@ -1,4 +1,7 @@
 # velingodata
+## 技术栈
+vue2+webpack+vuex+Router
+页面模板jquery+bootstrap
 
 > A Vue.js project
 

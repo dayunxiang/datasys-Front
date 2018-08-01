@@ -8,7 +8,7 @@
         <div class="panel panel-headline">
           <div class="panel-body">
             <!-- BORDERED TABLE -->
-            <table class="table table-bordered" >
+            <table class="table table-bordered">
               <thead>
               <tr>
                 <th>账号</th>
@@ -30,9 +30,9 @@
               </tr>
               </thead>
               <tbody v-for="item in queryData">
-                <td>{{item.account}}</td>
-                <td>{{item.Ename}}</td>
-                <td>{{item.Cname}}</td>
+              <td>{{item.account}}</td>
+              <td>{{item.Ename}}</td>
+              <td>{{item.Cname}}</td>
               </tbody>
             </table>
           </div>
@@ -48,22 +48,17 @@
 <script>
   export default ({
     name: 'vqueryToday',
-    data(){
-      return{
-        queryData:[]
+    data() {
+      return {
+        queryData: []
       }
     },
-    methods:{
-      getQueryToday:function() {
-        let vm = this;
-        this.$axios.get("../static/data.json").then(function (response) {
-            console.log(response.data)
-            vm.queryData=response.data
-        })
-      }
-    },
-    created:function(){
-      this.getQueryToday()
+    methods: {},
+    created: function () {
+      let vm = this;
+      this.$axios.get("../static/data.json").then(function (response) {
+        vm.queryData = response.data
+      })
     }
   })
 </script>

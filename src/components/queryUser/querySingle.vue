@@ -79,36 +79,34 @@
           "firstDay": 1
         };
         //初始化显示当前时间
-        this.$nextTick(function () {
-          $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
-          //日期控件初始化
-          $('#daterange-btn').daterangepicker(
-            {
-              "singleDatePicker": false,
-              "timePicker": false,
-              "timePicker24Hour": false,
-              "linkedCalendars": false,
-              "autoUpdateInput": false,
-              'locale': locale,
-              ranges: {
-                '今日': [moment(), moment()],
-                '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '最近7日': [moment().subtract(6, 'days'), moment()],
-                '最近30日': [moment().subtract(29, 'days'), moment()],
-                '本月': [moment().startOf('month'), moment().endOf('month')],
-                '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-              },
-              startDate: moment().subtract(29, 'days'),
-              endDate: moment()
+        $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+        //日期控件初始化
+        $('#daterange-btn').daterangepicker(
+          {
+            "singleDatePicker": false,
+            "timePicker": false,
+            "timePicker24Hour": false,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            'locale': locale,
+            ranges: {
+              '今日': [moment(), moment()],
+              '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+              '最近7日': [moment().subtract(6, 'days'), moment()],
+              '最近30日': [moment().subtract(29, 'days'), moment()],
+              '本月': [moment().startOf('month'), moment().endOf('month')],
+              '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            function (start, end) {
-              $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
-            }
-          );
-        })
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment()
+          },
+          function (start, end) {
+            $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+          }
+        );
       }
     },
-    created: function () {
+    mounted: function () {
       this.initDate()
     }
   })

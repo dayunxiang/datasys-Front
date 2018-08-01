@@ -85,17 +85,17 @@
 <script>
   export default ({
     name: 'vserverData',
-    data(){
-      return{
-        selectedArea:'',
-        selectedServer:'',
-        startTime:'',
-        endTime:''
+    data() {
+      return {
+        selectedArea: '',
+        selectedServer: '',
+        startTime: '',
+        endTime: ''
       }
     },
     methods: {
       initDate: function () {
-        let vm=this
+        let vm = this
         var locale = {
           "format": 'YYYY-MM-DD',
           "separator": " -222 ",
@@ -110,49 +110,51 @@
           "firstDay": 1
         };
         //初始化显示当前时间
-        vm.$nextTick(function () {
-          $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
-          //日期控件初始化
-          $('#daterange-btn').daterangepicker(
-            {
-              "singleDatePicker": false,
-              "timePicker": false,
-              "timePicker24Hour": false,
-              "linkedCalendars": false,
-              "autoUpdateInput": false,
-              'locale': locale,
-              ranges: {
-                '今日': [moment(), moment()],
-                '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '最近7日': [moment().subtract(6, 'days'), moment()],
-                '最近30日': [moment().subtract(29, 'days'), moment()],
-                '本月': [moment().startOf('month'), moment().endOf('month')],
-                '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-              },
-              startDate: moment().subtract(29, 'days'),
-              endDate: moment()
+
+        $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+        //日期控件初始化
+        $('#daterange-btn').daterangepicker(
+          {
+            "singleDatePicker": false,
+            "timePicker": false,
+            "timePicker24Hour": false,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            'locale': locale,
+            ranges: {
+              '今日': [moment(), moment()],
+              '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+              '最近7日': [moment().subtract(6, 'days'), moment()],
+              '最近30日': [moment().subtract(29, 'days'), moment()],
+              '本月': [moment().startOf('month'), moment().endOf('month')],
+              '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            function (start, end) {
-              this.start=start;
-              this.end=end ;
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment()
+          },
+          function (start, end) {
+            this.start = start;
+            this.end = end;
 
-              $('#daterange-btn span').html( this.start.format('YYYY-MM-DD')+ ' - ' + this.end.format('YYYY-MM-DD'));
+            $('#daterange-btn span').html(this.start.format('YYYY-MM-DD') + ' - ' + this.end.format('YYYY-MM-DD'));
 
-              //moment对象转换成时间戳发给vue
-              vm.startTime=this.start.format('X');
-              vm.endTime=this.end.format('X');
-            }
-          );
-        })
+            //moment对象转换成时间戳发给vue
+            vm.startTime = this.start.format('X');
+            vm.endTime = this.end.format('X');
+          }
+        );
+
       },
-      submitForm:function () {
+      submitForm: function () {
         let vm = this;
-          console.log(vm.selectedArea,vm.selectedServer)
-          console.log(vm.startTime,vm.endTime)
+        console.log(vm.selectedArea, vm.selectedServer)
+        console.log(vm.startTime, vm.endTime)
       }
     },
-    created: function () {
+    mounted: function () {
       this.initDate()
+    },
+    created: function () {
     }
   })
 </script>
