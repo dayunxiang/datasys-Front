@@ -13,17 +13,12 @@
                 <select class="form-control" v-model="selectedArea">
                   <option disabled value="">--请选择大区--</option>
                   <option value="China">全国</option>
-                  <option value="Wuhan">武汉</option>
-                  <option value="Beijing">北京</option>
                 </select>
               </div>
               <div class="col-md-2">
                 <select class="form-control" v-model="selectedServer">
                   <option disabled value="">--请选择服务器--</option>
                   <option value="ServerAll">全服</option>
-                  <option value="Server1">1</option>
-                  <option value="Server2">2</option>
-                  <option value="Server3">3</option>
                 </select>
               </div>
               <div class="col-md-7">
@@ -60,7 +55,6 @@
                 <th>七留</th>
                 <th>14留</th>
                 <th>30留</th>
-                <th>流失等级</th>
                 <th>首日时长</th>
                 <th>7日内有记录2天</th>
                 <th>7日内有记录3天</th>
@@ -69,7 +63,32 @@
                 <th>7日内有记录6天</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody v-for="(item,key) in showData">
+              <tr style="text-align: center">
+                <td>{{key}}</td>
+                <td>{{item.DAU}}</td>
+                <td>{{item.DOU}}</td>
+                <td>{{item.PCU}}</td>
+                <td>{{item.ACU}}</td>
+                <td>{{item.addedCount}}</td>
+                <td>{{item.addedCount}}</td>
+                <td>{{item.addedCount}}</td>
+                <td>{{item.loginCount}}</td>
+                <td>{{item.loginCount}}</td>
+                <td>{{item.loginCount}}</td>
+                <td>{{item.allCount}}</td>
+                <td>{{item.remain2}}</td>
+                <td>{{item.remain3}}</td>
+                <td>{{item.remain7}}</td>
+                <td>{{item.remain14}}</td>
+                <td>{{item.remain30}}</td>
+                <td>{{item.meanOnlineTime}}</td>
+                <td>{{item.occur_2of7}}</td>
+                <td>{{item.occur_3of7}}</td>
+                <td>{{item.occur_4of7}}</td>
+                <td>{{item.occur_5of7}}</td>
+                <td>{{item.occur_6of7}}</td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -90,7 +109,11 @@
         selectedArea: '',
         selectedServer: '',
         startTime: '',
-        endTime: ''
+        endTime: '',
+
+        //ajax数据
+        queryData: {},
+        showData: {}
       }
     },
     methods: {
@@ -139,22 +162,47 @@
             $('#daterange-btn span').html(this.start.format('YYYY-MM-DD') + ' - ' + this.end.format('YYYY-MM-DD'));
 
             //moment对象转换成时间戳发给vue
-            vm.startTime = this.start.format('X');
-            vm.endTime = this.end.format('X');
+            vm.startTime = this.start.format('YYYYMMDD');
+            vm.endTime = this.end.format('YYYYMMDD');
           }
         );
 
       },
       submitForm: function () {
         let vm = this;
-        console.log(vm.selectedArea, vm.selectedServer)
-        console.log(vm.startTime, vm.endTime)
+        if (!vm.selectedArea) {
+          alert("请选择地区！")
+        } else if (!vm.selectedServer) {
+          alert("请选择服务器！")
+        } else if (!vm.startTime && !vm.endTime) {
+          alert("请选择起止时间！")
+        } else {
+          console.log(vm.selectedArea, vm.selectedServer)
+          console.log(vm.startTime, vm.endTime)
+
+          //根据起止时间筛选数据
+          vm.showData = {};
+          for (let i = vm.startTime; i <= vm.endTime; i++) {
+            let item = vm.queryData
+            if (item[i]) {
+              vm.showData[i] = item[i]
+            }
+          }
+          console.log(vm.showData)
+        }
       }
     },
     mounted: function () {
       this.initDate()
     },
     created: function () {
+      let vm = this;
+      this.$axios.get("/server").then(function (response) {
+        vm.queryData = response.data;
+        vm.showData = vm.queryData
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
   })
 </script>

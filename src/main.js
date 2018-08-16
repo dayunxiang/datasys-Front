@@ -9,6 +9,8 @@ import axios from 'axios'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 
+axios.defaults.baseURL="/api"
+
 /* eslint-disable no-new */
 new Vue({
   el: '#wrapper',
