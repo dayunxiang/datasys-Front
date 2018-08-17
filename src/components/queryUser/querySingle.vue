@@ -4,13 +4,13 @@
     <!-- MAIN CONTENT -->
     <div class="main-content">
       <div class="container-fluid">
-        <h3 class="page-title">精准用户查询>单个用户多日期数据</h3>
+        <h3 class="page-title">精准用户查询>单个用户按日期查询</h3>
         <div class="panel panel-headline">
           <div class="panel-body">
             <!-- CHOOSEBOARD -->
             <div class="row">
               <div class="col-md-2">
-                <input type="text" class="form-control" placeholder="请输入用户ID"/>
+                <input type="text" class="form-control" placeholder="请输入用户ID" v-model="userid"/>
               </div>
               <div class="col-md-9">
                 <div class="input-group">
@@ -21,7 +21,7 @@
                   </button>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary">筛选</button>
+              <button type="button" class="btn btn-primary" @click="submitForm">筛选</button>
             </div>
             <br>
             <!-- END CHOOSEBOARD -->
@@ -34,8 +34,8 @@
                 <th>中文<br>昵称</th>
                 <th>班级</th>
                 <th>学校</th>
-                <th>创建<br>日期</th>
-                <th>登陆<br>记录</th>
+                <th>创建日期</th>
+                <th>登陆记录</th>
                 <th>在线<br>时长</th>
                 <th>小游戏时长</th>
                 <th>视频<br>时长</th>
@@ -47,7 +47,25 @@
                 <th>作业正确率</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody v-for="(item) in showData">
+              <tr style="text-align: center">
+                <td>{{item.account}}</td>
+                <td>{{item.name}}</td>
+                <td style="word-break:keep-all">{{item.cname}}</td>
+                <td style="font-size:80%">{{item.class_name}}</td>
+                <td style="font-size:80%">{{item.school}}</td>
+                <td>{{item.create_date}}</td>
+                <td style="font-size:80%">{{item.loginTimeList}}</td>
+                <td>{{item.onlineTime}}</td>
+                <td>{{item.smallgameTime}}</td>
+                <td>{{item.videoTime}}</td>
+                <td>{{item.farmTime}}</td>
+                <td>{{item.homeworkTime}}</td>
+                <td>{{item.freechatTotal}}</td>
+                <td>{{item.class_id}}</td>
+                <td>{{item.homeworkTotal}}</td>
+                <td>{{item.homeworkAccuracy}}</td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -63,8 +81,15 @@
 <script>
   export default ({
     name: 'vquerySingle',
+    data(){
+      return{
+        showData:[],
+        userid:''
+      }
+    },
     methods: {
       initDate: function () {
+        let vm=this;
         var locale = {
           "format": 'YYYY-MM-DD',
           "separator": " -222 ",
@@ -101,9 +126,40 @@
             endDate: moment()
           },
           function (start, end) {
+            this.start=start;
+            this.end=end;
+
             $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+
+            //moment对象转换成时间戳发给vue
+            vm.startTime = this.start.format('YYYYMMDD');
+            vm.endTime = this.end.format('YYYYMMDD');
           }
         );
+      },
+      submitForm: function () {
+        let vm = this
+        let queryData=[]
+        vm.showData=[]
+
+        if(!vm.userid){
+          alert("请输入用户ID！")
+        }else if (!vm.startTime && !vm.endTime) {
+          alert("请选择有效起止时间！")
+        }else{
+          console.log(vm.userid,vm.startTime, vm.endTime)
+
+          //axios
+          this.$axios.get("/user?date_begin="+vm.startTime+"&date_end="+vm.endTime).then(function (response) {
+            queryData = response.data
+
+            queryData.forEach(function (item) {
+              if(item.account==vm.userid){
+                vm.showData.push(item)
+              }
+            })
+          })
+        }
       }
     },
     mounted: function () {
