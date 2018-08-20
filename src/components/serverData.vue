@@ -197,7 +197,7 @@
     },
     created: function () {
       let vm = this;
-      this.$axios.get("/server").then(function (response) {
+      this.$axios.get("http://r.welingo.cn:55580/data/server").then(function (response) {
         vm.queryData = response.data;
         vm.showData = vm.queryData
       }).catch(function (error) {

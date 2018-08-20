@@ -12,13 +12,13 @@ module.exports = {
 
     //proxy代理，解决跨域问题
     proxyTable: {
-      "/api":{
-        target: 'http://r.welingo.cn:55580/data/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/'
-        }
-      }
+      // "/api":{
+      //   target: 'http://r.welingo.cn:55580/data/',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': '/'
+      //   }
+      // }
     },
 
     // Various Dev Server settings

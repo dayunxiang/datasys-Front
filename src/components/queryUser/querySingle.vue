@@ -150,7 +150,7 @@
           console.log(vm.userid,vm.startTime, vm.endTime)
 
           //axios
-          this.$axios.get("/user?date_begin="+vm.startTime+"&date_end="+vm.endTime).then(function (response) {
+          this.$axios.get("http://r.welingo.cn:55580/data/user?date_begin="+vm.startTime+"&date_end="+vm.endTime).then(function (response) {
             queryData = response.data
 
             queryData.forEach(function (item) {

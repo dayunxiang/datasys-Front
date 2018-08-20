@@ -9,7 +9,8 @@ import axios from 'axios'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 
-axios.defaults.baseURL="/api"
+//proxy代理。上线后失效
+// axios.defaults.baseURL="/api"
 
 /* eslint-disable no-new */
 new Vue({

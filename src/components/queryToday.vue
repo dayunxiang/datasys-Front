@@ -92,7 +92,7 @@
       console.log(date)
 
       //axios
-      this.$axios.get("/user?date_begin="+date+"&date_end="+date).then(function (response) {
+      this.$axios.get("http://r.welingo.cn:55580/data/user?date_begin="+date+"&date_end="+date).then(function (response) {
         vm.queryData = response.data
         console.log(vm.queryData)
       })
