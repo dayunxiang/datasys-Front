@@ -89,12 +89,13 @@
 
       //获取当日日期
       let date=this.getTodayDate()-1
-      console.log(date)
-
+      console.log("昨日日期："+date)
+      console.log("从服务器获取数据中...")
       //axios
       this.$axios.get("http://r.welingo.cn:55580/data/user?date_begin="+date+"&date_end="+date).then(function (response) {
+        console.log("数据获取完毕")
         vm.queryData = response.data
-        console.log(vm.queryData)
+        //console.log(vm.queryData)
       })
     }
   })

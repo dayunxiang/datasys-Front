@@ -151,6 +151,7 @@
 
           //axios
           this.$axios.get("http://r.welingo.cn:55580/data/user?date_begin="+vm.startTime+"&date_end="+vm.endTime).then(function (response) {
+            console.log("数据获取完毕")
             queryData = response.data
 
             queryData.forEach(function (item) {

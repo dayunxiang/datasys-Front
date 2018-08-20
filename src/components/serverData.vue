@@ -55,12 +55,12 @@
                 <th>七留</th>
                 <th>14留</th>
                 <th>30留</th>
-                <th>首日时长</th>
-                <th>7日内有记录2天</th>
-                <th>7日内有记录3天</th>
-                <th>7日内有记录4天</th>
-                <th>7日内有记录5天</th>
-                <th>7日内有记录6天</th>
+                <th>首日<br>时长</th>
+                <th style="width: 20px" class="text-center">7日内有记录2天</th>
+                <th style="width: 20px" class="text-center">7日内有记录3天</th>
+                <th style="width: 20px" class="text-center">7日内有记录4天</th>
+                <th style="width: 20px" class="text-center">7日内有记录5天</th>
+                <th style="width: 20px" class="text-center">7日内有记录6天</th>
               </tr>
               </thead>
               <tbody v-for="(item,key) in showData">
@@ -197,7 +197,9 @@
     },
     created: function () {
       let vm = this;
+      console.log("从服务器获取数据中...")
       this.$axios.get("http://r.welingo.cn:55580/data/server").then(function (response) {
+        console.log("数据获取完毕")
         vm.queryData = response.data;
         vm.showData = vm.queryData
       }).catch(function (error) {
