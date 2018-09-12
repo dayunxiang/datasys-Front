@@ -6,6 +6,7 @@ import vserverData from '@/components/serverData'
 import vqueryToday from '@/components/queryToday'
 import vquerySingle from '@/components/queryUser/querySingle'
 import vqueryAll from '@/components/queryUser/queryAll'
+import vtestPage from '@/components/testPage'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/queryAll',
       name: 'vqueryAll',
       component: vqueryAll
+    },
+    {
+      path: '/testPage',
+      name: 'vtestPage',
+      component: vtestPage
     }
   ]
 })

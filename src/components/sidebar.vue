@@ -18,6 +18,7 @@
               </ul>
             </div>
           </li>
+          <li><router-link to="/testPage" class="" @click.native='shrinkCollapse'><i class="lnr lnr-chart-bars"></i> <span>测试表格插件</span></router-link></li>
         </ul>
       </nav>
     </div>
