@@ -62,7 +62,7 @@
   <!-- END MAIN -->
 </template>
 <script>
-  import vTable from '@/components/vTable'
+  import vTable from '@/components/common/vTable'
   export default ({
     name: 'vqueryToday',
     data() {
@@ -70,8 +70,7 @@
         columns:[
           {
             title:'账号',
-            key:'account',
-            sortable:true
+            key:'account'
           },{
             title:'英文昵称',
             key:'name'

@@ -4,8 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import vdashboard from '@/components/dashboard'
 import vserverData from '@/components/serverData'
 import vqueryToday from '@/components/queryToday'
-import vquerySingle from '@/components/queryUser/querySingle'
-import vqueryAll from '@/components/queryUser/queryAll'
+import vquerySingle from '@/components/querySingle'
+import vqueryAction from '@/components/queryUser/queryAction'
+import vqueryHomework from '@/components/queryUser/queryHomework'
+import vqueryExp from '@/components/queryUser/queryExp'
 import vtestPage from '@/components/testPage'
 
 Vue.use(Router)
@@ -33,9 +35,19 @@ export default new Router({
       component: vquerySingle
     },
     {
-      path: '/queryAll',
-      name: 'vqueryAll',
-      component: vqueryAll
+      path: '/queryAction',
+      name: 'vqueryAction',
+      component: vqueryAction
+    },
+    {
+      path: '/queryHomework',
+      name: 'vqueryHomework',
+      component: vqueryHomework
+    },
+    {
+      path: '/queryExp',
+      name: 'vqueryExp',
+      component: vqueryExp
     },
     {
       path: '/testPage',

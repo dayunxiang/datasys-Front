@@ -96,7 +96,11 @@
       this.currentData.forEach(function (row) {
         var tds=[];
         _this.currentColumns.forEach(function (cell) {
-          tds.push(h('td',{style:cell.cellStyle},row[cell.key]));
+          if(row[cell.key]){
+            tds.push(h('td',{style:cell.cellStyle},row[cell.key]));
+          }else{
+            tds.push(h('td',{style:cell.cellStyle},0));
+          }
         });
         trs.push(h('tr',tds));
       });

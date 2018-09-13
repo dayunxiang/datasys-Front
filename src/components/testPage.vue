@@ -20,7 +20,7 @@
   <!-- END MAIN -->
 </template>
 <script>
-  import vTable from '@/components/vTable'
+  import vTable from '@/components/common/vTable'
   export default ({
     name: 'testPage',
     data:function(){
