@@ -2,6 +2,8 @@
 ## 技术栈
 vue2+webpack+vuex+Router
 页面模板jquery+bootstrap
+## 技能点
+vTable组件：实现动态渲染table、排序功能  
 
 > A Vue.js project
 
