@@ -4,7 +4,7 @@
     <!-- MAIN CONTENT -->
     <div class="main-content">
       <div class="container-fluid">
-        <h3 class="page-title">精准用户查询>单个用户按日期查询</h3>
+        <h3 class="page-title">单个用户精确查询</h3>
         <div class="panel panel-headline">
           <div class="panel-body">
             <!-- CHOOSEBOARD -->
@@ -68,6 +68,7 @@
               </tr>
               </tbody>
             </table>
+            <div v-show="isDataEmpty">暂无查询结果</div>
           </div>
         </div>
         <!-- END BORDERED TABLE -->
@@ -84,7 +85,8 @@
     data(){
       return{
         showData:[],
-        userid:''
+        userid:'',
+        isDataEmpty:false
       }
     },
     methods: {
@@ -104,7 +106,7 @@
           "firstDay": 1
         };
         //初始化显示当前时间
-        $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+        $('#daterange-btn span').html('  --请选择查询起止时间--  ');
         //日期控件初始化
         $('#daterange-btn').daterangepicker(
           {
@@ -115,14 +117,14 @@
             "autoUpdateInput": false,
             'locale': locale,
             ranges: {
-              '今日': [moment(), moment()],
+              //'今日': [moment(), moment()],
               '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
               '最近7日': [moment().subtract(6, 'days'), moment()],
               '最近30日': [moment().subtract(29, 'days'), moment()],
               '本月': [moment().startOf('month'), moment().endOf('month')],
               '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            startDate: moment().subtract(29, 'days'),
+            startDate: moment(),
             endDate: moment()
           },
           function (start, end) {
@@ -145,7 +147,7 @@
         if(!vm.userid){
           alert("请输入用户ID！")
         }else if (!vm.startTime && !vm.endTime) {
-          alert("请选择有效起止时间！")
+          alert("可查询昨天以前的数据")
         }else{
           console.log(vm.userid,vm.startTime, vm.endTime)
 
@@ -159,6 +161,12 @@
                 vm.showData.push(item)
               }
             })
+            if (JSON.stringify(vm.showData) === '[]') {
+              console.log('数据为空')
+              vm.data = []
+              vm.isDataEmpty = true
+            } else {
+              vm.isDataEmpty = false}
           })
         }
       }

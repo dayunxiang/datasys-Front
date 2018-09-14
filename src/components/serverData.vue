@@ -11,14 +11,12 @@
             <div class="row">
               <div class="col-md-2">
                 <select class="form-control" v-model="selectedArea">
-                  <option disabled value="">--请选择大区--</option>
-                  <option value="China">全国</option>
+                  <option disabled value="">全国</option>
                 </select>
               </div>
               <div class="col-md-2">
                 <select class="form-control" v-model="selectedServer">
-                  <option disabled value="">--请选择服务器--</option>
-                  <option value="ServerAll">全服</option>
+                  <option disabled value="">全服</option>
                 </select>
               </div>
               <div class="col-md-7">
@@ -133,8 +131,7 @@
           "firstDay": 1
         };
         //初始化显示当前时间
-
-        $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+        $('#daterange-btn span').html('  --请选择查询起止时间--  ');
         //日期控件初始化
         $('#daterange-btn').daterangepicker(
           {
@@ -145,14 +142,14 @@
             "autoUpdateInput": false,
             'locale': locale,
             ranges: {
-              '今日': [moment(), moment()],
+              //'今日': [moment(), moment()],
               '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
               '最近7日': [moment().subtract(6, 'days'), moment()],
               '最近30日': [moment().subtract(29, 'days'), moment()],
               '本月': [moment().startOf('month'), moment().endOf('month')],
               '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            startDate: moment().subtract(29, 'days'),
+            startDate: moment(),
             endDate: moment()
           },
           function (start, end) {
@@ -170,15 +167,16 @@
       },
       submitForm: function () {
         let vm = this;
-        if (!vm.selectedArea) {
-          alert("请选择地区！")
-        } else if (!vm.selectedServer) {
-          alert("请选择服务器！")
-        } else if (!vm.startTime && !vm.endTime) {
-          alert("请选择起止时间！")
+        // if (!vm.selectedArea) {
+        //   alert("请选择地区！")
+        // } else if (!vm.selectedServer) {
+        //   alert("请选择服务器！")
+        // } else
+
+        if (!vm.startTime && !vm.endTime) {
+          alert("可查询昨天以前的数据")
         } else {
-          console.log(vm.selectedArea, vm.selectedServer)
-          console.log(vm.startTime, vm.endTime)
+          console.log(vm.startTime, vm.endTime,vm.selectedArea, vm.selectedServer)
 
           //根据起止时间筛选数据
           vm.showData = {};

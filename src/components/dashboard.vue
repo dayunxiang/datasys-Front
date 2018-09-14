@@ -34,7 +34,7 @@
                 <div class="metric">
                   <span class="icon"><i class="fa fa-eye"></i></span>
                   <p>
-                    <span class="number">1,252</span>
+                    <span class="number">{{data.curr_online||0}}</span>
                     <span class="title">即时在线</span>
                   </p>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="metric">
                   <span class="icon"><i class="fa fa-bar-chart"></i></span>
                   <p>
-                    <span class="number">3127</span>
+                    <span class="number">{{data.peak_online||0}}</span>
                     <span class="title">最高在线</span>
                   </p>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="metric">
                   <span class="icon"><i class="fa fa-bar-chart"></i></span>
                   <p>
-                    <span class="number">123</span>
+                    <span class="number">{{data.added_count||0}}</span>
                     <span class="title">当日注册</span>
                   </p>
                 </div>
@@ -61,7 +61,8 @@
                 <div class="metric">
                   <span class="icon"><i class="fa fa-bar-chart"></i></span>
                   <p>
-                    <span class="number">203</span>
+                    <span class="number">{{data.user_count||0}}</span>
+                    <span v-show="chosen">{{startTime.substr(startTime.length-4)+'-'+endTime.substr(startTime.length-4)}}</span>
                     <span class="title">总注册</span>
                   </p>
                 </div>
@@ -99,6 +100,14 @@
 <script>
   export default ({
     name: 'vdashboard',
+    data(){
+      return{
+        data:[],
+        startTime:'',
+        endTime:'',
+        chosen:false
+      }
+    },
     methods: {
       initChart: function () {
         //初始化信息
@@ -144,8 +153,7 @@
           "firstDay": 1
         };
         //初始化显示当前时间
-
-        $('#daterange-btn span').html(moment().subtract(1, 'hours').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+        $('#daterange-btn span').html('请选择查询起止时间');
         //日期控件初始化
         $('#daterange-btn').daterangepicker(
           {
@@ -156,14 +164,14 @@
             "autoUpdateInput": false,
             'locale': locale,
             ranges: {
-              '今日': [moment(), moment()],
+              //'今日': [moment(), moment()],
               '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
               '最近7日': [moment().subtract(6, 'days'), moment()],
               '最近30日': [moment().subtract(29, 'days'), moment()],
               '本月': [moment().startOf('month'), moment().endOf('month')],
               '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            startDate: moment().subtract(29, 'days'),
+            startDate: moment(),
             endDate: moment()
           },
           function (start, end) {
@@ -175,6 +183,7 @@
             //moment对象转换成时间戳发给vue
             vm.startTime = this.start.format('YYYYMMDD');
             vm.endTime = this.end.format('YYYYMMDD');
+            vm.chosen=true
           }
         );
 
@@ -183,15 +192,15 @@
         let vm = this
 
         if (!vm.startTime && !vm.endTime) {
-          alert("请选择有效起止时间！")
+          alert("可查询昨天以前的数据")
         }else{
           console.log(vm.startTime, vm.endTime)
 
-          // //axios
-          // this.$axios.get("http://r.welingo.cn:55580/data/user?date_begin="+vm.startTime+"&date_end="+vm.endTime).then(function (response) {
-          //   console.log("数据获取完毕")
-          //   vm.data = response.data
-          // })
+          //axios
+          this.$axios.get("http://r.welingo.cn:55580/data/user_count?date_begin="+vm.startTime+"&date_end="+vm.endTime).then(function (response) {
+            console.log("总注册数获取完毕")
+            vm.data.user_count = response.data.user_count
+          })
         }
       }
     },
@@ -200,7 +209,14 @@
       this.initDate()
     },
     created: function () {
+      let vm = this;
+      vm.chosen=false
 
+      //axios
+      this.$axios.get("http://r.welingo.cn:55580/data/online").then(function (response) {
+        console.log("数据获取完毕")
+        vm.data = response.data
+      })
     }
   })
 </script>
