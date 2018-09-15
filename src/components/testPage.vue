@@ -7,6 +7,16 @@
         <h3 class="page-title">表格</h3>
         <div class="panel panel-headline">
           <div class="panel-body">
+            <!-- CHOOSEBOARD -->
+            <div class="row">
+              <div class="col-md-7">
+                <div class="input-group">
+                  <v-date-picker @transferDate="getDate"></v-date-picker>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" @click="submitForm">筛选</button>
+            </div>
+            <br>
             <!-- BORDERED TABLE -->
             <v-table :data="data" :columns="columns"></v-table>
           </div>
@@ -21,6 +31,7 @@
 </template>
 <script>
   import vTable from '@/components/common/vTable'
+  import vDatePicker from '@/components/common/vDatePicker'
   export default ({
     name: 'testPage',
     data:function(){
@@ -54,15 +65,27 @@
             birthday:'1098-21-12',
             address:'大连市朝阳区芍药居'
           }
-        ]
+        ],
+        startTime:'',
+        endTime:''
       }
     },
     methods: {
+      submitForm: function () {
+        let vm=this
+        console.log(vm.startTime,vm.endTime)
+      },
+      getDate:function (msg) {
+        let vm=this
+        vm.startTime=msg.startTime
+        vm.endTime=msg.endTime
+      }
     },
     mounted: function () {
     },
     components: {
-      vTable
+      vTable,
+      vDatePicker
     }
   })
 </script>
