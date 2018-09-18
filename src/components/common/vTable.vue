@@ -96,6 +96,7 @@
       this.currentData.forEach(function (row) {
         var tds=[];
         _this.currentColumns.forEach(function (cell) {
+          //data.exp_changed.added被过滤掉了
           if(row[cell.key]){
             tds.push(h('td',{style:cell.cellStyle},row[cell.key]));
           }else{

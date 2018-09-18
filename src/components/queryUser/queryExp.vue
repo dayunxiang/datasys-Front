@@ -94,31 +94,31 @@
             sortable: true
           }, {
             title: '日金钱—增加',
-            key: 'gold_changed.add',
+            key: 'gold_changed_added',
             sortable: true
           }, {
             title: '日金钱—获得',
-            key: 'gold_changed.gain',
+            key: 'gold_changed_gain',
             sortable: true
           }, {
             title: '日金钱—消耗',
-            key: 'gold_changed.consume',
+            key: 'gold_changed_consume',
             sortable: true
           }, {
             title: '日金钱—当前',
-            key: 'gold_changed.currentCount',
+            key: 'gold_changed_currentCount',
             sortable: true
           }, {
             title: '日门票—增加',
-            key: 'ticket_changed.add',
+            key: 'ticket_changed_added',
             sortable: true
           }, {
             title: '日门票—减少',
-            key: 'ticket_changed.consume',
+            key: 'ticket_changed_consume',
             sortable: true
           }, {
             title: '日经验—增加',
-            key: 'exp_changed.added',
+            key: 'exp_changed_added',
             sortable: true
           }, {
             title: '日经验—当前',
@@ -217,7 +217,34 @@
               vm.isDataEmpty = true
             } else {
               vm.isDataEmpty = false
-              vm.data = response.data
+              var tempData=response.data
+              //console.log(tempData)
+              tempData.forEach(function (item) {
+                //var i=eval("("+item.exp_changed+")")  //eval()只能在非严格模式下用
+                //var i=$(item.exp_changed).html()
+
+                //@TODO 表格插件不支持二次取key.暂时用下面的方法
+                 var exp_changed=JSON.parse(item.exp_changed)
+                 var gold_changed=JSON.parse(item.gold_changed)
+                 var ticket_changed=JSON.parse(item.ticket_changed)
+
+                if(item.gold_changed) {
+                  item.gold_changed_added = gold_changed.added || 0
+                  item.gold_changed_gain = gold_changed.gain || 0
+                  item.gold_changed_consume =gold_changed.consume || 0
+                  item.gold_changed_currentCount =gold_changed.currentCount || 0
+                }
+                if(item.ticket_changed) {
+                  item.ticket_changed_added =ticket_changed.added || 0
+                  item.ticket_changed_consume =ticket_changed.gain || 0
+                }
+                if(item.exp_changed){
+                  item.exp_changed_added=exp_changed.added|| 0
+                 }
+              })
+
+              vm.data = tempData
+              console.log(vm.data)
             }
           })
         }
