@@ -53,7 +53,7 @@
                 <th>七留</th>
                 <th>14留</th>
                 <th>30留</th>
-                <th>首日<br>时长</th>
+                <th>当日平均在线</th>
                 <th style="width: 20px" class="text-center">7日内有记录2天</th>
                 <th style="width: 20px" class="text-center">7日内有记录3天</th>
                 <th style="width: 20px" class="text-center">7日内有记录4天</th>

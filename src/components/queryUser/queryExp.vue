@@ -113,8 +113,16 @@
             key: 'ticket_changed_added',
             sortable: true
           }, {
-            title: '日门票—减少',
+            title: '日门票—获得',
+            key: 'ticket_changed_gain',
+            sortable: true
+          } , {
+            title: '日门票—消耗',
             key: 'ticket_changed_consume',
+            sortable: true
+          }, {
+            title: '日门票—当前',
+            key: 'ticket_changed_currentCount',
             sortable: true
           }, {
             title: '日经验—增加',
@@ -236,7 +244,9 @@
                 }
                 if(item.ticket_changed) {
                   item.ticket_changed_added =ticket_changed.added || 0
-                  item.ticket_changed_consume =ticket_changed.gain || 0
+                  item.ticket_changed_gain = ticket_changed.gain || 0
+                  item.ticket_changed_consume =ticket_changed.consume || 0
+                  item.ticket_changed_currentCount =ticket_changed.currentCount || 0
                 }
                 if(item.exp_changed){
                   item.exp_changed_added=exp_changed.added|| 0
